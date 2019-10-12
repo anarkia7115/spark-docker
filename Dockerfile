@@ -40,10 +40,12 @@ ENV PATH $JAVA_HOME/bin:$PATH
 RUN mkdir -p /opt && \
     cd /opt && \
     obsutil cp $HW_OBS_TOOLS/$HADOOP_GZ . && \
-    tar -zxf $HADOOP_GZ hadoop-${HADOOP_VERSION}/lib/native && \
+    tar -zxf $HADOOP_GZ && \
     ln -s hadoop-${HADOOP_VERSION} hadoop && \
     echo Hadoop ${HADOOP_VERSION} native libraries installed in /opt/hadoop/lib/native && \
     rm $HADOOP_GZ
+
+ENV HADOOP_HOME /opt/hadoop
 
 ENV TAR_OPT "--strip 1"
 # download and install spark

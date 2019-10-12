@@ -1,2 +1,3 @@
 SPARK_LOCAL_IP=spark-worker
 SPARK_WORKER_PORT=7078
+SPARK_DIST_CLASSPATH=$($HADOOP_HOME/bin/hadoop classpath)
