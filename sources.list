@@ -1,0 +1,4 @@
+deb http://mirrors.myhuaweicloud.com/debian/ stretch main non-free contrib
+deb http://mirrors.myhuaweicloud.com/debian/ stretch-proposed-updates main non-free contrib
+deb-src http://mirrors.myhuaweicloud.com/debian/ stretch main non-free contrib
+deb-src http://mirrors.myhuaweicloud.com/debian/ stretch-proposed-updates main non-free contrib

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+. /common.sh
+
+if ! getent hosts spark-master; then
+  sleep 5
+  exit 0
+fi
+
+echo "$(hostname -i) spark-worker" >> /etc/hosts
+
+cp /opt/spark/conf/spark-env-worker.sh /opt/spark/conf/spark-env.sh
+cp /opt/spark/conf/spark-defaults-worker.conf /opt/spark/conf/spark-defaults.conf
+
+#/opt/spark/sbin/start-slave.sh spark://spark-master:7077 --webui-port 8081; sleep infinity
+/opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077 --webui-port 8081

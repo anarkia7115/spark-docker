@@ -1,0 +1,9 @@
+#!/bin/bash
+
+. /common.sh
+
+echo "$(hostname -i) spark-master" >> /etc/hosts
+
+export JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+#/opt/spark/sbin/start-master.sh --ip spark-master --port 7077 --webui-port 8080; sleep infinity
+/opt/spark/bin/spark-class org.apache.spark.deploy.master.Master --ip spark-master --port 7077 --webui-port 8080
