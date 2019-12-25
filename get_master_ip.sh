@@ -1,0 +1,1 @@
+./k describe pod spark-master-0|grep IP|head -1|awk -F: '{print $2}'|tr -d '[:space:]'
