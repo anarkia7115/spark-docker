@@ -18,13 +18,11 @@ ENV HADOOP_VERSION 2.7.7
 ENV SPARK_VERSION 2.4.4
 ENV HADOOP_GZ "hadoop-$HADOOP_VERSION.tar.gz"
 #ENV SPARK_GZ "spark-$SPARK_VERSION-gaojx.tar.gz"
-ENV SPARK_GZ "spark-$SPARK_VERSION-bin-hadoop2.7.tgz"
+ENV SPARK_GZ "spark-2.4.4-bin-without-hadoop-scala-2.12.tgz"
 ENV JAVA_GZ "jdk-1.8.tar.gz"
 ENV HADOOP_HOME "/opt/hadoop"
 
-RUN wget https://obs-community.obs.cn-north-1.myhuaweicloud.com/obsutil/current/obsutil_linux_amd64.tar.gz
-RUN tar -xzf obsutil_linux_amd64.tar.gz
-RUN mv obsutil*/obsutil /usr/local/bin
+ADD ./obsutil /usr/local/bin
 RUN obsutil config -i $AK -k $SK -e $HW_OBS_ENDPOINT
 
 # download and install java
@@ -42,10 +40,12 @@ ENV PATH $JAVA_HOME/bin:$PATH
 RUN mkdir -p /opt && \
     cd /opt && \
     obsutil cp $HW_OBS_TOOLS/$HADOOP_GZ . && \
-    tar -zxf $HADOOP_GZ hadoop-${HADOOP_VERSION}/lib/native && \
+    tar -zxf $HADOOP_GZ && \
     ln -s hadoop-${HADOOP_VERSION} hadoop && \
     echo Hadoop ${HADOOP_VERSION} native libraries installed in /opt/hadoop/lib/native && \
     rm $HADOOP_GZ
+
+ENV HADOOP_HOME /opt/hadoop
 
 ENV TAR_OPT "--strip 1"
 # download and install spark
@@ -62,7 +62,7 @@ RUN obsutil cp $HW_OBS_TOOLS/hadoop-aws-2.7.7.jar $spark_jars
 # add hw mirrors
 RUN echo -e "\033[40;32mBackup the original configuration file,new name and path is /etc/apt/sources.list.back.\n\033[40;37m" && \
     cp -fp /etc/apt/sources.list /etc/apt/sources.list.back
-ADD ./sources.list.163 /etc/apt/sources.list
+ADD ./sources.list /etc/apt/sources.list
 
 # test tools
 RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y netcat net-tools telnet
