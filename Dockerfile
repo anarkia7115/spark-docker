@@ -66,6 +66,10 @@ ADD ./sources.list /etc/apt/sources.list
 
 # test tools
 RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y netcat net-tools telnet
+
+# spark envs
+ENV SPARK_DIST_CLASSPATH $($HADOOP_HOME/bin/hadoop classpath)
+
 WORKDIR /opt/spark/
 
 # submit jars
