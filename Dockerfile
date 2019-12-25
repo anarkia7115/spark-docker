@@ -67,9 +67,6 @@ ADD ./sources.list /etc/apt/sources.list
 # test tools
 RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y netcat net-tools telnet
 
-# spark envs
-ENV SPARK_DIST_CLASSPATH $($HADOOP_HOME/bin/hadoop classpath)
-
 WORKDIR /opt/spark/
 
 # submit jars
@@ -82,5 +79,6 @@ WORKDIR /opt/spark/
 ARG FILE_CHANGE
 # ADD common.sh spark-master spark-worker /
 ADD spark-master spark-worker /
+ADD spark-env.sh /opt/spark/conf/
 # ADD spark-defaults.conf spark-env.sh log4j.properties spark-env-worker.sh spark-defaults-worker.conf /opt/spark/conf/
 # ENV PATH $PATH:/opt/spark/bin
