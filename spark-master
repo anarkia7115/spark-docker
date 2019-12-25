@@ -1,8 +1,9 @@
 #!/bin/bash
 
-. /common.sh
+# . /common.sh
 
-echo "$(hostname -i) spark-master" >> /etc/hosts
+# echo "$(hostname -i) spark-master" >> /etc/hosts
 
-#/opt/spark/sbin/start-master.sh --ip spark-master --port 7077 --webui-port 8080; sleep infinity
-/opt/spark/bin/spark-class org.apache.spark.deploy.master.Master --ip spark-master --port 7077 --webui-port 8080
+export SPARK_NO_DAEMONIZE=1
+/opt/spark/sbin/start-master.sh --ip `hostname -i` --port 7077 --webui-port 8080
+#/opt/spark/bin/spark-class org.apache.spark.deploy.master.Master --ip spark-master --port 7077 --webui-port 8080
