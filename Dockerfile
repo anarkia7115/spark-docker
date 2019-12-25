@@ -77,5 +77,6 @@ WORKDIR /opt/spark/
 # add scripts and update spark default config
 ARG FILE_CHANGE
 # ADD common.sh spark-master spark-worker /
+ADD spark-master spark-worker /
 # ADD spark-defaults.conf spark-env.sh log4j.properties spark-env-worker.sh spark-defaults-worker.conf /opt/spark/conf/
 # ENV PATH $PATH:/opt/spark/bin
