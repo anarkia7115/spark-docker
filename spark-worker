@@ -18,4 +18,4 @@ export SPARK_NO_DAEMONIZE=1
 
 master_host=$1
 echo "connecting worker to $master_host"
-./sbin/start-slave.sh spark://$master_host:7077
+/opt/spark/sbin/start-slave.sh spark://$master_host:7077
