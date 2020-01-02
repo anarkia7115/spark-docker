@@ -17,24 +17,11 @@ ENV HW_OBS_ENDPOINT obs.cn-north-4.myhwclouds.com
 ENV HADOOP_VERSION 2.7.7
 ENV SPARK_VERSION 2.4.4
 ENV HADOOP_GZ "hadoop-$HADOOP_VERSION.tar.gz"
-#ENV SPARK_GZ "spark-$SPARK_VERSION-gaojx.tar.gz"
 ENV SPARK_GZ "spark-2.4.4-bin-without-hadoop-scala-2.12.tgz"
-ENV JAVA_GZ "jdk-1.8.tar.gz"
 ENV HADOOP_HOME "/opt/hadoop"
 
 ADD ./obsutil /usr/local/bin
 RUN obsutil config -i $AK -k $SK -e $HW_OBS_ENDPOINT
-
-# download and install java
-RUN mkdir -p /opt && \
-    cd /opt && \
-    obsutil cp $HW_OBS_TOOLS/$JAVA_GZ . && \
-    tar -xzf $JAVA_GZ && \
-    rm $JAVA_GZ
-
-ENV JAVA_HOME "/opt/jdk1.8.0_101"
-
-ENV PATH $JAVA_HOME/bin:$PATH
 
 # download and install hadoop
 RUN mkdir -p /opt && \
@@ -68,12 +55,6 @@ ADD ./sources.list /etc/apt/sources.list
 RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y netcat net-tools telnet
 
 WORKDIR /opt/spark/
-
-# submit jars
-#RUN mkdir -p /jars
-#RUN obsutil cp $HW_OBS_JARS/pubmed-streaming-0.0.3-SNAPSHOT.jar /jars/
-#ADD ./pubmed-streaming-0.0.3-SNAPSHOT.jar /jars/
-
 
 # add scripts and update spark default config
 ARG FILE_CHANGE
