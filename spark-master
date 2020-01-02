@@ -5,5 +5,7 @@
 # echo "$(hostname -i) spark-master" >> /etc/hosts
 
 export SPARK_NO_DAEMONIZE=1
-/opt/spark/sbin/start-master.sh --ip `hostname -i` --port 7077 --webui-port 8080
+master_host=$1
+echo "starting master as spark://$master_host:7077"
+/opt/spark/sbin/start-master.sh --ip $master_host --port 7077 --webui-port 8080
 #/opt/spark/bin/spark-class org.apache.spark.deploy.master.Master --ip spark-master --port 7077 --webui-port 8080
