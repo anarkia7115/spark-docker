@@ -60,6 +60,6 @@ WORKDIR /opt/spark/
 ARG FILE_CHANGE
 # ADD common.sh spark-master spark-worker /
 ADD scripts/spark-master scripts/spark-worker /
-#ADD conf/spark-env.sh /opt/spark/conf/
+ADD conf/spark-env.sh /opt/spark/conf/
 # ADD spark-defaults.conf spark-env.sh log4j.properties spark-env-worker.sh spark-defaults-worker.conf /opt/spark/conf/
 # ENV PATH $PATH:/opt/spark/bin
