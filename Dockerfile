@@ -14,37 +14,36 @@ ENV SK $SK
 
 # define spark and hadoop versions
 ENV HW_OBS_ENDPOINT obs.cn-north-4.myhwclouds.com
-ENV HADOOP_VERSION 2.7.7
-ENV SPARK_VERSION 2.4.4
-ENV HADOOP_GZ "hadoop-$HADOOP_VERSION.tar.gz"
-ENV SPARK_GZ "spark-2.4.4-bin-without-hadoop-scala-2.12.tgz"
-ENV HADOOP_HOME "/opt/hadoop"
+#ENV HADOOP_VERSION 2.7.7
+#ENV HADOOP_GZ "hadoop-$HADOOP_VERSION.tar.gz"
+ENV SPARK_GZ "spark-2.4.4-bin-hadoop2.7.tgz"
+#ENV HADOOP_HOME "/opt/hadoop"
 
 ADD ./obsutil /usr/local/bin
 RUN obsutil config -i $AK -k $SK -e $HW_OBS_ENDPOINT
 
 # download and install hadoop
-RUN mkdir -p /opt && \
-    cd /opt && \
-    obsutil cp $HW_OBS_TOOLS/$HADOOP_GZ . && \
-    tar -zxf $HADOOP_GZ && \
-    ln -s hadoop-${HADOOP_VERSION} hadoop && \
-    echo Hadoop ${HADOOP_VERSION} native libraries installed in /opt/hadoop/lib/native && \
-    rm $HADOOP_GZ
+#RUN mkdir -p /opt && \
+#    cd /opt && \
+#    obsutil cp $HW_OBS_TOOLS/$HADOOP_GZ . && \
+#    tar -zxf $HADOOP_GZ && \
+#    ln -s hadoop-${HADOOP_VERSION} hadoop && \
+#    echo Hadoop ${HADOOP_VERSION} native libraries installed in /opt/hadoop/lib/native && \
+#    rm $HADOOP_GZ
+#
+#ENV HADOOP_HOME /opt/hadoop
 
-ENV HADOOP_HOME /opt/hadoop
-
-ENV TAR_OPT "--strip 1"
+ENV TAR_OPT ""
+#ENV TAR_OPT "--strip 1"
 # download and install spark
 RUN obsutil cp $HW_OBS_TOOLS/$SPARK_GZ /
 RUN mkdir -p /opt/spark && cd /opt/spark && \
     tar -zxf /$SPARK_GZ $TAR_OPT && \
-    echo Spark ${SPARK_VERSION} installed in /opt && \
     rm /$SPARK_GZ
 
-ENV spark_jars /opt/spark/assembly/target/scala-2.11/jars/
-RUN obsutil cp $HW_OBS_TOOLS/aws-java-sdk-1.7.4.2.jar $spark_jars
-RUN obsutil cp $HW_OBS_TOOLS/hadoop-aws-2.7.7.jar $spark_jars
+#ENV spark_jars /opt/spark/assembly/target/scala-2.11/jars/
+#RUN obsutil cp $HW_OBS_TOOLS/aws-java-sdk-1.7.4.2.jar $spark_jars
+#RUN obsutil cp $HW_OBS_TOOLS/hadoop-aws-2.7.7.jar $spark_jars
 
 # add hw mirrors
 RUN echo -e "\033[40;32mBackup the original configuration file,new name and path is /etc/apt/sources.list.back.\n\033[40;37m" && \
