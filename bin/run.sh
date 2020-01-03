@@ -1,2 +1,2 @@
-docker run --name spark-master-hello --network=spark -d spark-on-k8s:2.4.4-2.12-v2 /spark-master spark-master-hello
-docker run --name spark-worker-hello --network=spark -d spark-on-k8s:2.4.4-2.12-v2 /spark-worker spark-master-hello
+docker run --name spark-master-hello --network=spark -d spark-on-k8s:2.4.4-2.11-v2 /spark-master spark-master-hello
+docker run --name spark-worker-hello --network=spark -d spark-on-k8s:2.4.4-2.11-v2 /spark-worker spark-master-hello
