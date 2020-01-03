@@ -49,7 +49,7 @@ RUN obsutil cp $HW_OBS_TOOLS/hadoop-aws-2.7.7.jar $spark_jars
 # add hw mirrors
 RUN echo -e "\033[40;32mBackup the original configuration file,new name and path is /etc/apt/sources.list.back.\n\033[40;37m" && \
     cp -fp /etc/apt/sources.list /etc/apt/sources.list.back
-ADD ./sources.list /etc/apt/sources.list
+ADD ./conf/sources.list /etc/apt/sources.list
 
 # test tools
 RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y netcat net-tools telnet
@@ -59,7 +59,7 @@ WORKDIR /opt/spark/
 # add scripts and update spark default config
 ARG FILE_CHANGE
 # ADD common.sh spark-master spark-worker /
-ADD spark-master spark-worker /
-ADD spark-env.sh /opt/spark/conf/
+ADD scripts/spark-master scripts/spark-worker /
+#ADD conf/spark-env.sh /opt/spark/conf/
 # ADD spark-defaults.conf spark-env.sh log4j.properties spark-env-worker.sh spark-defaults-worker.conf /opt/spark/conf/
 # ENV PATH $PATH:/opt/spark/bin
