@@ -33,8 +33,7 @@ RUN obsutil config -i $AK -k $SK -e $HW_OBS_ENDPOINT
 #
 #ENV HADOOP_HOME /opt/hadoop
 
-ENV TAR_OPT ""
-#ENV TAR_OPT "--strip 1"
+ENV TAR_OPT "--strip 1"
 # download and install spark
 RUN obsutil cp $HW_OBS_TOOLS/$SPARK_GZ /
 RUN mkdir -p /opt/spark && cd /opt/spark && \
