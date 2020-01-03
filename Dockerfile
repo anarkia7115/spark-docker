@@ -42,7 +42,7 @@ RUN mkdir -p /opt/spark && cd /opt/spark && \
     echo Spark ${SPARK_VERSION} installed in /opt && \
     rm /$SPARK_GZ
 
-ENV spark_jars /opt/spark/assembly/target/scala-2.11/jars/
+ENV spark_jars /opt/spark/assembly/target/scala-2.12/jars/
 RUN obsutil cp $HW_OBS_TOOLS/aws-java-sdk-1.7.4.2.jar $spark_jars
 RUN obsutil cp $HW_OBS_TOOLS/hadoop-aws-2.7.7.jar $spark_jars
 
